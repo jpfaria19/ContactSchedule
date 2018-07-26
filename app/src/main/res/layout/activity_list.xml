@@ -9,9 +9,16 @@
     android:orientation="vertical">
 
     <TextView
-        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="LISTA DE CONTATOS"/>
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="LISTA DE CONTATOS"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <ListView
+        android:id="@+id/lvItens"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

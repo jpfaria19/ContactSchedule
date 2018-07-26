@@ -28,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtCity = findViewById(R.id.edtCity);
 
-        btnSave = findViewById(R.id.btnSave);t status
+        btnSave = findViewById(R.id.btnSave);
         btnClear = findViewById(R.id.btnClear);
         btnViewContacts = findViewById(R.id.btnViewContacts);
     }
