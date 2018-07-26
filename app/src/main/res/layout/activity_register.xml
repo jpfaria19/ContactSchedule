@@ -64,4 +64,11 @@
         android:onClick="viewAllContacts"
         android:text="VISUALIZAR CONTATOS"/>
 
+    <TextView
+        android:id="@+id/testRecoverItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="testando"/>
+
 </LinearLayout>
