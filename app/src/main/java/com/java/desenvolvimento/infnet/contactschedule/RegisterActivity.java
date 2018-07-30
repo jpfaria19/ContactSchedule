@@ -1,11 +1,14 @@
 package com.java.desenvolvimento.infnet.contactschedule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +17,9 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -22,11 +27,13 @@ public class RegisterActivity extends AppCompatActivity {
     Button btnSave, btnClear, btnViewContacts;
     String fileName = "listContacts.txt";
     FileOutputStream outputStream;
-    FileInputStream fis;
-    BufferedReader reader;
 
-    TextView txtRecoverItem;
+/*    ListView lvItens = findViewById(R.id.lvItens);
+    ArrayList<String> line;
+    String changeLine;
+    ArrayAdapter<String> lines = new ArrayAdapter<String>(this, R.layout.activity_list, line);*/
 
+    TextView shitTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,75 +49,75 @@ public class RegisterActivity extends AppCompatActivity {
         btnClear = findViewById(R.id.btnClear);
         btnViewContacts = findViewById(R.id.btnViewContacts);
 
-        /*ListView lvItens = findViewById(R.id.lvItens);
-        ArrayList<String> line = loadItens();
-        ArrayAdapter<String> lines = new ArrayAdapter<String>(this, R.layout.activity_list, line);
-        lvItens.setAdapter(lines);*/
+        //lvItens.setAdapter(lines);
 
-        btnViewContacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadItens();
-            }
-        });
-
-        txtRecoverItem = findViewById(R.id.testRecoverItem);
+         shitTest = findViewById(R.id.test);
     }
 
-    public void loadItens() {
 
-        try {
-            fis = openFileInput(fileName);
-             reader = new BufferedReader(new InputStreamReader(new DataInputStream(fis)));
-
-            String line;
-
-            while ((line = reader.readLine()) != null){
-                txtRecoverItem.setText(line);
-                txtRecoverItem.append("\n");
-            }
-
-            fis.close();
-
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void clearForm(View view){
-
+    public void clearForm(View view) {
         edtName.getText().clear();
         edtPhone.getText().clear();
         edtCity.getText().clear();
         edtEmail.getText().clear();
-
     }
 
-    public void saveContact(View view){
+    public void saveContact(View view) {
 
-        try{
+        try {
             outputStream = openFileOutput(fileName, Context.MODE_APPEND);
 
-            EditText[] ets = {edtName, edtPhone, edtEmail, edtCity};
+            EditText[] ets = {edtName, edtPhone, edtEmail};
+
+            String separetor = edtCity.getText().toString();
+            separetor = separetor + " >";
 
             for (EditText et : ets) {
                 outputStream.write(et.getText().toString().getBytes());
-                outputStream.write("\n".getBytes());
             }
-
-
+            outputStream.write(separetor.getBytes());
+            outputStream.write("\n".getBytes());
             outputStream.close();
             Toast.makeText(RegisterActivity.this, "Contato salvo com sucesso!", Toast.LENGTH_LONG).show();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-/*    public void viewAllContacts(View view){
+    public void loadItens() {
+        FileInputStream fis = null;
+        try {
+            fis = openFileInput(fileName);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+            //changeLine = line.toString();
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                sb.append(line).append("\n");
+            }
+
+            shitTest.setText(sb.toString());
+
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                assert fis != null;
+                fis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public void viewAllContacts(View view) {
         Intent listIntent = new Intent(RegisterActivity.this, ListActivity.class);
+        loadItens();
         startActivity(listIntent);
-    }*/
+    }
 
 }

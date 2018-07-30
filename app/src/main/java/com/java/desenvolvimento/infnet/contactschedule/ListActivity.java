@@ -2,8 +2,17 @@ package com.java.desenvolvimento.infnet.contactschedule;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -11,3 +20,4 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
     }
 }
+
