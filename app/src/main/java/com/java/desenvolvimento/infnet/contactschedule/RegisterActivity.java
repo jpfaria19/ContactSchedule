@@ -33,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
     String changeLine;
     ArrayAdapter<String> lines = new ArrayAdapter<String>(this, R.layout.activity_list, line);*/
 
-    TextView shitTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edtEmail);
         edtCity = findViewById(R.id.edtCity);
 
-        btnSave = findViewById(R.id.btnSave);
-        btnClear = findViewById(R.id.btnClear);
-        btnViewContacts = findViewById(R.id.btnViewContacts);
 
         //lvItens.setAdapter(lines);
-
-         shitTest = findViewById(R.id.test);
     }
 
 
@@ -67,16 +61,17 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             outputStream = openFileOutput(fileName, Context.MODE_APPEND);
 
-            EditText[] ets = {edtName, edtPhone, edtEmail};
+            EditText[] ets = {edtName, edtPhone, edtEmail, edtCity};
 
-            String separetor = edtCity.getText().toString();
-            separetor = separetor + " >";
+            String separetor = "#" + "\n";
+
+            outputStream.write(separetor.getBytes());
 
             for (EditText et : ets) {
                 outputStream.write(et.getText().toString().getBytes());
+                outputStream.write("\n".getBytes());
             }
-            outputStream.write(separetor.getBytes());
-            outputStream.write("\n".getBytes());
+
             outputStream.close();
             Toast.makeText(RegisterActivity.this, "Contato salvo com sucesso!", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
@@ -85,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    public void loadItens() {
+/*    public void loadItens() {
         FileInputStream fis = null;
         try {
             fis = openFileInput(fileName);
@@ -98,9 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
             while ((line = br.readLine()) != null) {
                 sb.append(line).append("\n");
             }
-
-            shitTest.setText(sb.toString());
-
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }finally {
@@ -112,11 +104,11 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
 
-    }
+    }*/
 
     public void viewAllContacts(View view) {
         Intent listIntent = new Intent(RegisterActivity.this, ListActivity.class);
-        loadItens();
+        //loadItens();
         startActivity(listIntent);
     }
 
