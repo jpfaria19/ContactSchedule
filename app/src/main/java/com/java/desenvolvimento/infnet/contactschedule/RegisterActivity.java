@@ -33,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
     String changeLine;
     ArrayAdapter<String> lines = new ArrayAdapter<String>(this, R.layout.activity_list, line);*/
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void saveContact(View view) {
 
         try {
-            outputStream = openFileOutput(fileName, Context.MODE_APPEND);
+            outputStream = openFileOutput(String.valueOf(fileName), Context.MODE_APPEND);
 
             EditText[] ets = {edtName, edtPhone, edtEmail, edtCity};
 
@@ -79,37 +78,35 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    public void viewAllContacts(View view) {
+        //Intent listIntent = new Intent(RegisterActivity.this, ListActivity.class);
+        loadItens();
+        //startActivity(listIntent);
+        //finish();
+    }
 
-/*    public void loadItens() {
+    public void loadItens() {
         FileInputStream fis = null;
         try {
             fis = openFileInput(fileName);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
-            //changeLine = line.toString();
             String line;
+//            changeLine = line.toString();
 
             while ((line = br.readLine()) != null) {
                 sb.append(line).append("\n");
             }
+            Toast.makeText(this, getFilesDir()+ "/" + sb, Toast.LENGTH_LONG).show();
+
+            //TODO: SB VAI PARA O ARRAY ADAPTER ->
+
+            fis.close();
         } catch (java.io.IOException e) {
             e.printStackTrace();
-        }finally {
-            try {
-                assert fis != null;
-                fis.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
 
-    }*/
-
-    public void viewAllContacts(View view) {
-        Intent listIntent = new Intent(RegisterActivity.this, ListActivity.class);
-        //loadItens();
-        startActivity(listIntent);
     }
 
 }
