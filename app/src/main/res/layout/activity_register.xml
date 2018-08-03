@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="10dp"
-    tools:context=".RegisterActivity">
+    tools:context=".interfaces.RegisterActivity">
 
     <EditText
         android:id="@+id/edtName"
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:onClick="viewAllContacts"
+        android:onClick="viewAll    Contacts"
         android:text="VISUALIZAR CONTATOS"/>
 
 

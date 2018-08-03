@@ -1,25 +1,19 @@
-package com.java.desenvolvimento.infnet.contactschedule;
+package com.java.desenvolvimento.infnet.contactschedule.interfaces;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.java.desenvolvimento.infnet.contactschedule.R;
+
 import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -58,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
     public void saveContact(View view) {
 
         try {
-            outputStream = openFileOutput(String.valueOf(fileName), Context.MODE_APPEND);
+            outputStream = openFileOutput(String.valueOf(fileName), Context.MODE_APPEND | Context.MODE_PRIVATE);
 
             EditText[] ets = {edtName, edtPhone, edtEmail, edtCity};
 

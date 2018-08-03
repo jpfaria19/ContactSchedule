@@ -1,9 +1,11 @@
-package com.java.desenvolvimento.infnet.contactschedule;
+package com.java.desenvolvimento.infnet.contactschedule.interfaces;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.java.desenvolvimento.infnet.contactschedule.R;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
