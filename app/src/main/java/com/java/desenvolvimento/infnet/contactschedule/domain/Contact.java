@@ -9,12 +9,12 @@ public class Contact {
     private String Email;
     private String City;
     private Date Moment;
-    private int Phone;
+    private String Phone;
 
 
 
     public Contact(){};
-    public Contact(String name, String email, String city, int phone, Date moment) {
+    public Contact(String name, String email, String city, String phone, Date moment) {
         Name = name;
         Email = email;
         City = city;
@@ -49,11 +49,11 @@ public class Contact {
         City = city;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return Phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         Phone = phone;
     }
 

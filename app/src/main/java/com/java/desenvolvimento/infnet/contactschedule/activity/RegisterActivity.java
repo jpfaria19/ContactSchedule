@@ -3,49 +3,32 @@ package com.java.desenvolvimento.infnet.contactschedule.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.autofill.Validator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.Length;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.util.List;
 
-public class RegisterActivity extends AppCompatActivity implements com.mobsandgeeks.saripaar.Validator.ValidationListener {
+public class RegisterActivity extends AppCompatActivity {
 
-    @NotEmpty
-    @Length(min = 3, max = 100)
     EditText edtName;
 
-    @NotEmpty
-    @Length(min = 9, max = 11)
     EditText edtPhone;
 
-    @NotEmpty
-    @Email
     EditText edtEmail;
 
-    @NotEmpty
     EditText edtCity;
+
+    boolean flag = false;
 
     String fileName = "listContacts.txt";
     FileOutputStream outputStream;
 
     //Contact contact = new Contact();
-
-    private com.mobsandgeeks.saripaar.Validator validator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +39,6 @@ public class RegisterActivity extends AppCompatActivity implements com.mobsandge
         edtPhone = findViewById(R.id.edtPhone);
         edtEmail = findViewById(R.id.edtEmail);
         edtCity = findViewById(R.id.edtCity);
-
-        validator = new com.mobsandgeeks.saripaar.Validator(this);
-        validator.setValidationListener(this);
     }
 
 
@@ -69,52 +49,69 @@ public class RegisterActivity extends AppCompatActivity implements com.mobsandge
         edtEmail.getText().clear();
     }
 
-    public void saveContact(View view) {
+    private void validateForm() {
 
-        if (validator.isValidating()) {
+        flag = false;
+
+        if (edtName.getText().toString().equals("")) {
+            Toast.makeText(this, "Significa que entrou aqui", Toast.LENGTH_LONG).show();
+            flag = true;
+        }
+        if (edtCity.getText().toString().equals("")) {
+            Toast.makeText(this, "Por favor, preencha o campo cidade.", Toast.LENGTH_LONG).show();
+            flag = true;
+        }
+        if (edtEmail.getText().toString().equals("")) {
+            Toast.makeText(this, "Por favor, preencha o campo email.", Toast.LENGTH_LONG).show();
+            flag = true;
+        }
+        if (edtPhone.getText().toString().equals("")) {
+            Toast.makeText(this, "Por favor, preencha o campo telefone.", Toast.LENGTH_LONG).show();
+            flag = true;
+        }
+    }
+
+    public void saveContact(View view) {
+        validateForm();
+        if (!flag) {
             try {
                 outputStream = openFileOutput(String.valueOf(fileName), Context.MODE_APPEND | Context.MODE_PRIVATE);
 
                 EditText[] ets = {edtName, edtPhone, edtEmail, edtCity};
 
+                Contact contatin = new Contact();
+                contatin.setName(edtName.getText().toString());
+                contatin.setPhone(edtPhone.getText().toString());
+                contatin.setEmail(edtEmail.getText().toString());
+                contatin.setCity(edtCity.getText().toString());
+
+
                 String separetor = "#" + "\n";
 
                 outputStream.write(separetor.getBytes());
-
-                for (EditText et : ets) {
-                    outputStream.write(et.getText().toString().getBytes());
-                    outputStream.write("\n".getBytes());
-                }
+                //outputStream.write("Autor=".getBytes());
+                outputStream.write(contatin.getName().getBytes());
+                outputStream.write("\n".getBytes());
+                outputStream.write(contatin.getPhone().getBytes());
+                outputStream.write("\n".getBytes());
+                outputStream.write(contatin.getEmail().getBytes());
+                outputStream.write("\n".getBytes());
+                outputStream.write(contatin.getCity().getBytes());
+                outputStream.write("\n".getBytes());
                 outputStream.close();
+
+                Toast.makeText(this, "Registro salvo com sucesso", Toast.LENGTH_LONG).show();
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            validator.validate();
         }
-
     }
 
     public void viewAllContacts(View view) {
         Intent listIntent = new Intent(this, ListActivity.class);
         startActivity(listIntent);
         //finish();
-    }
-
-    @Override
-    public void onValidationSucceeded() {
-        Toast.makeText(RegisterActivity.this, "Contato salvo com sucesso!", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError validationError : errors) {
-            View view = validationError.getView();
-            String message = validationError.getCollatedErrorMessage(this);
-            if (view instanceof EditText) {
-                ((EditText) view).setError(message);
-            } else {
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-            }
-        }
     }
 }
