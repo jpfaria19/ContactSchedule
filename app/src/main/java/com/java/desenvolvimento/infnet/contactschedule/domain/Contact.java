@@ -1,20 +1,27 @@
 package com.java.desenvolvimento.infnet.contactschedule.domain;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class Contact {
 
     private String Name;
-    private String email;
+    private String Email;
     private String City;
+    private Date Moment;
     private int Phone;
 
 
 
     public Contact(){};
-    public Contact(String name, String email, String city, int phone) {
+    public Contact(String name, String email, String city, int phone, Date moment) {
         Name = name;
-        this.email = email;
+        Email = email;
         City = city;
         Phone = phone;
+
+        Moment = moment;
+        moment = Calendar.getInstance().getTime();
     }
 
 
@@ -27,11 +34,11 @@ public class Contact {
     }
 
     public String getEmail() {
-        return email;
+        return Email;
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.Email = email;
     }
 
     public String getCity() {
@@ -48,5 +55,13 @@ public class Contact {
 
     public void setPhone(int phone) {
         Phone = phone;
+    }
+
+    public Date getMoment() {
+        return Moment;
+    }
+
+    public void setMoment(Date moment) {
+        Moment = moment;
     }
 }
