@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.java.desenvolvimento.infnet.contactschedule.R;
@@ -28,10 +29,15 @@ public class ListActivity extends AppCompatActivity {
 
     List<Contact> contacts = new ArrayList<>();
 
+    TextView eptTxt;
+    boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+
+        eptTxt = findViewById(R.id.emptyList);
 
         contactAdapter = new ContactAdapter(contacts);
         recyclerView = findViewById(R.id.recyclerView);
@@ -50,26 +56,31 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         FileInputStream fis = null;
+                        flag = false;
                         try {
                             fis = openFileInput(fileName);
                             InputStreamReader isr = new InputStreamReader(fis);
                             BufferedReader br = new BufferedReader(isr);
                             String line = br.readLine();
 
-                            while (line != null) {
-                                if (line.equals("#")) {
-                                    String name = br.readLine();
-                                    String phone = br.readLine();
-                                    String email = br.readLine();
-                                    String cidade = br.readLine();
-                                    //String date = br.readLine();
-                                    Contact contact = new Contact(name, phone, email, cidade);
-                                    contacts.add(contact);
+                            if (fileName.isEmpty()) {
+                                eptTxt.setText("A lista está vazia");
+                                eptTxt.getVisibility();
+                            } else {
+                                flag = true;
+                                while (line != null) {
+                                    if (line.equals("#")) {
+                                        String name = br.readLine();
+                                        String phone = br.readLine();
+                                        String email = br.readLine();
+                                        String cidade = br.readLine();
+                                        //String date = br.readLine();
+                                        Contact contact = new Contact(name, phone, email, cidade);
+                                        contacts.add(contact);
+                                    }
+                                    line = br.readLine();
                                 }
-                                line = br.readLine();
                             }
-
-                            //TODO: CRIAR UMA EXCEPTION PARA QUANDO A LISTA FOR VAZIA INFORMAR AO USUÁRIO QUE A LISTA ESTÁ VAZIA.
 
                         } catch (final FileNotFoundException fileNotFound) {
                             fileNotFound.printStackTrace();
