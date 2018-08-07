@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.java.desenvolvimento.infnet.contactschedule.R;
@@ -13,7 +14,10 @@ import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
@@ -22,7 +26,7 @@ public class ListActivity extends AppCompatActivity {
     ContactAdapter contactAdapter;
     String fileName = "listContacts.txt";
 
-    List<Contact> contacts;
+    List<Contact> contacts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,36 +38,58 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(contactAdapter);
 
-        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
-
-        loadItens();
-
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
-    public void loadItens() {
-        FileInputStream fis = null;
-        try {
-            fis = openFileInput(fileName);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr);
-            StringBuilder sb = new StringBuilder();
-            String line;
-            //changeLine = line.toString();
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-            while ((line = br.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
-            Toast.makeText(this, getFilesDir()+ "/" + sb, Toast.LENGTH_LONG).show();
+        new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        FileInputStream fis = null;
+                        try {
+                            fis = openFileInput(fileName);
+                            InputStreamReader isr = new InputStreamReader(fis);
+                            BufferedReader br = new BufferedReader(isr);
+                            String line = br.readLine();
 
-            //contactAdapter = sb;
+                            while (line != null) {
+                                if (line.equals("#")) {
+                                    String name = br.readLine();
+                                    String phone = br.readLine();
+                                    String email = br.readLine();
+                                    String cidade = br.readLine();
+                                    //String date = br.readLine();
+                                    Contact contact = new Contact(name, phone, email, cidade);
+                                    contacts.add(contact);
+                                }
+                                line = br.readLine();
+                            }
 
-            //TODO: SB VAI PARA O ARRAY ADAPTER ->
+                            //TODO: CRIAR UMA EXCEPTION PARA QUANDO A LISTA FOR VAZIA INFORMAR AO USUÁRIO QUE A LISTA ESTÁ VAZIA.
 
-            fis.close();
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
+                        } catch (final FileNotFoundException fileNotFound) {
+                            fileNotFound.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
+                        recyclerView.post(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ContactAdapter adapter = new ContactAdapter(contacts);
+                                        recyclerView.setAdapter(adapter);
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
+                        );
+                    }
+                }
+        ).start();
     }
 }
 

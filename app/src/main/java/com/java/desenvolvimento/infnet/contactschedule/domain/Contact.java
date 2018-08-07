@@ -8,20 +8,17 @@ public class Contact {
     private String Name;
     private String Email;
     private String City;
-    private Date Moment;
+    private Date moment;
     private String Phone;
 
 
-
-    public Contact(){};
-    public Contact(String name, String email, String city, String phone, Date moment) {
+    public Contact(String name, String email, String city, String phone) {
         Name = name;
         Email = email;
         City = city;
         Phone = phone;
 
-        Moment = moment;
-        moment = Calendar.getInstance().getTime();
+        this.moment = Calendar.getInstance().getTime();
     }
 
 
@@ -58,10 +55,6 @@ public class Contact {
     }
 
     public Date getMoment() {
-        return Moment;
-    }
-
-    public void setMoment(Date moment) {
-        Moment = moment;
+        return moment;
     }
 }

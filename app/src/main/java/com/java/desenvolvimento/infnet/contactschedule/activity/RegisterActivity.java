@@ -28,8 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
     String fileName = "listContacts.txt";
     FileOutputStream outputStream;
 
-    //Contact contact = new Contact();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,19 +75,19 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 outputStream = openFileOutput(String.valueOf(fileName), Context.MODE_APPEND | Context.MODE_PRIVATE);
 
-                EditText[] ets = {edtName, edtPhone, edtEmail, edtCity};
+//                EditText[] ets = {edtName, edtPhone, edtEmail, edtCity};
 
-                Contact contatin = new Contact();
+                Contact contatin = new Contact(edtName.getText().toString(), edtPhone.getText().toString(), edtEmail.getText().toString(), edtCity.getText().toString());
                 contatin.setName(edtName.getText().toString());
                 contatin.setPhone(edtPhone.getText().toString());
                 contatin.setEmail(edtEmail.getText().toString());
                 contatin.setCity(edtCity.getText().toString());
 
 
-                String separetor = "#" + "\n";
+                String separetor = "#";
 
                 outputStream.write(separetor.getBytes());
-                //outputStream.write("Autor=".getBytes());
+                outputStream.write("\n".getBytes());
                 outputStream.write(contatin.getName().getBytes());
                 outputStream.write("\n".getBytes());
                 outputStream.write(contatin.getPhone().getBytes());
