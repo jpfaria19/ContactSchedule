@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import com.java.desenvolvimento.infnet.contactschedule.adapter.ContactAdapter;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -58,15 +60,16 @@ public class ListActivity extends AppCompatActivity {
                         FileInputStream fis = null;
                         flag = false;
                         try {
-                            fis = openFileInput(fileName);
-                            InputStreamReader isr = new InputStreamReader(fis);
-                            BufferedReader br = new BufferedReader(isr);
-                            String line = br.readLine();
+                            File f = getFileStreamPath(fileName);
 
-                            if (fileName.isEmpty()) {
+                            if (f.length() == 0) {
                                 eptTxt.setText("A lista está vazia");
-                                eptTxt.getVisibility();
+                                eptTxt.setVisibility(View.VISIBLE);
                             } else {
+                                fis = openFileInput(fileName);
+                                InputStreamReader isr = new InputStreamReader(fis);
+                                BufferedReader br = new BufferedReader(isr);
+                                String line = br.readLine();
                                 flag = true;
                                 while (line != null) {
                                     if (line.equals("#")) {
