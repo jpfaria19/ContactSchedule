@@ -16,7 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ListActivity" android:parentActivityName=".activity.RegisterActivity">
+        <activity
+            android:name=".activity.ListActivity"
+            android:parentActivityName=".activity.RegisterActivity"
+            android:noHistory="true">
+
+        </activity>
+        <activity android:name=".activity.DetailsContactActivity">
 
         </activity>
     </application>

@@ -1,5 +1,7 @@
 package com.java.desenvolvimento.infnet.contactschedule.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.java.desenvolvimento.infnet.contactschedule.R;
+import com.java.desenvolvimento.infnet.contactschedule.activity.DetailsContactActivity;
+import com.java.desenvolvimento.infnet.contactschedule.activity.ListActivity;
+import com.java.desenvolvimento.infnet.contactschedule.activity.RegisterActivity;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
 import java.text.DateFormat;
@@ -18,6 +23,8 @@ import java.util.List;
 public class ContactAdapter extends RecyclerView.Adapter {
 
     List<Contact> contacts;
+
+    //Context context;
 
     public ContactAdapter(List<Contact> contacts){
         this.contacts = contacts;
@@ -57,6 +64,28 @@ public class ContactAdapter extends RecyclerView.Adapter {
             name = itemView.findViewById(R.id.textName);
             cidade = itemView.findViewById(R.id.textCity);
             date = itemView.findViewById(R.id.textDate);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    Intent detailContact = new Intent(v.getContext(), DetailsContactActivity.class);
+                    Contact contact = contacts.get(position);
+
+                    String getName = contact.getName();
+                    detailContact.putExtra("name",getName);
+                    String getEmail = contact.getEmail();
+                    detailContact.putExtra("email", getEmail);
+                    String getCity = contact.getCity();
+                    detailContact.putExtra("city", getCity);
+                    String getPhone = contact.getPhone();
+                    detailContact.putExtra("phone", getPhone);
+                    Date getMoment = contact.getMoment();
+                    detailContact.putExtra("moment", getMoment);
+
+                    v.getContext().startActivity(detailContact);
+                }
+            });
         }
     }
 }

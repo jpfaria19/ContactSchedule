@@ -1,5 +1,6 @@
 package com.java.desenvolvimento.infnet.contactschedule.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -105,5 +106,7 @@ public class ListActivity extends AppCompatActivity {
                 }
         ).start();
     }
+
+
 }
 
