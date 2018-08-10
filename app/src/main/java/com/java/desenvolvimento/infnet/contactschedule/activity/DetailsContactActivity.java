@@ -1,14 +1,16 @@
 package com.java.desenvolvimento.infnet.contactschedule.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.java.desenvolvimento.infnet.contactschedule.R;
 
 public class DetailsContactActivity extends AppCompatActivity {
 
-    TextView detailName, detailEmail, detailCity, detailPhone, detailMoment;
+    TextView detailName, detailEmail, detailCity, detailPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +21,6 @@ public class DetailsContactActivity extends AppCompatActivity {
         detailEmail = findViewById(R.id.detailEmail);
         detailCity = findViewById(R.id.detailCity);
         detailPhone = findViewById(R.id.detailPhone);
-        detailMoment = findViewById(R.id.detailMoment);
 
 
 
@@ -44,10 +45,11 @@ public class DetailsContactActivity extends AppCompatActivity {
         Bundle extraTelefone = getIntent().getExtras();
         String Telefone = extraTelefone.getString("phone");
         detailPhone.setText(Telefone);
+    }
 
-        //MOMENTO
-        Bundle extraMomento = getIntent().getExtras();
-        String Momento = extraMomento.getString("moment");
-        detailMoment.setText(Momento);
+    public void registerNewContact(View view){
+        Intent newContact = new Intent(this, RegisterActivity.class);
+        startActivity(newContact);
+        finish();
     }
 }

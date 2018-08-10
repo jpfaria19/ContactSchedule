@@ -1,6 +1,6 @@
 package com.java.desenvolvimento.infnet.contactschedule.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +16,6 @@ import com.java.desenvolvimento.infnet.contactschedule.activity.RegisterActivity
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
 import java.text.DateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class ContactAdapter extends RecyclerView.Adapter {
 
     List<Contact> contacts;
 
-    //Context context;
+    RegisterActivity register = new RegisterActivity();
 
     public ContactAdapter(List<Contact> contacts){
         this.contacts = contacts;
@@ -59,7 +58,7 @@ public class ContactAdapter extends RecyclerView.Adapter {
         TextView cidade;
         TextView date;
 
-        public ContactViewHolder(View itemView) {
+        private ContactViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.textName);
             cidade = itemView.findViewById(R.id.textCity);
@@ -80,8 +79,6 @@ public class ContactAdapter extends RecyclerView.Adapter {
                     detailContact.putExtra("city", getCity);
                     String getPhone = contact.getPhone();
                     detailContact.putExtra("phone", getPhone);
-                    Date getMoment = contact.getMoment();
-                    detailContact.putExtra("moment", getMoment);
 
                     v.getContext().startActivity(detailContact);
                 }

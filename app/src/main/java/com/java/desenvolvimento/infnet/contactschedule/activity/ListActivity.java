@@ -2,14 +2,13 @@ package com.java.desenvolvimento.infnet.contactschedule.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.adapter.ContactAdapter;
@@ -22,7 +21,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static java.util.Date.parse;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -40,7 +42,7 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        eptTxt = findViewById(R.id.emptyList);
+        eptTxt = findViewById(R.id.listEmpty);
 
         contactAdapter = new ContactAdapter(contacts);
         recyclerView = findViewById(R.id.recyclerView);
@@ -78,7 +80,6 @@ public class ListActivity extends AppCompatActivity {
                                         String phone = br.readLine();
                                         String email = br.readLine();
                                         String cidade = br.readLine();
-                                        //String date = br.readLine();
                                         Contact contact = new Contact(name, phone, email, cidade);
                                         contacts.add(contact);
                                     }
@@ -108,5 +109,10 @@ public class ListActivity extends AppCompatActivity {
     }
 
 
+    public void registerNewContact(View view) {
+        Intent newContact = new Intent(this, RegisterActivity.class);
+        startActivity(newContact);
+        finish();
+    }
 }
 

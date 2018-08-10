@@ -8,7 +8,7 @@ public class Contact {
     private String Name;
     private String Email;
     private String City;
-    private Date moment;
+    private Date Moment;
     private String Phone;
 
 
@@ -18,7 +18,7 @@ public class Contact {
         City = city;
         Phone = phone;
 
-        this.moment = Calendar.getInstance().getTime();
+        this.Moment = Calendar.getInstance().getTime();
     }
 
 
@@ -55,6 +55,10 @@ public class Contact {
     }
 
     public Date getMoment() {
-        return moment;
+        return Moment;
+    }
+
+    public void setMoment(Date moment) {
+        Moment = moment;
     }
 }

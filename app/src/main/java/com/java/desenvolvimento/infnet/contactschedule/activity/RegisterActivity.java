@@ -75,8 +75,6 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 outputStream = openFileOutput(String.valueOf(fileName), Context.MODE_APPEND | Context.MODE_PRIVATE);
 
-//                EditText[] ets = {edtName, edtPhone, edtEmail, edtCity};
-
                 Contact contatin = new Contact(edtName.getText().toString(), edtPhone.getText().toString(), edtEmail.getText().toString(), edtCity.getText().toString());
                 contatin.setName(edtName.getText().toString());
                 contatin.setPhone(edtPhone.getText().toString());
@@ -107,9 +105,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public void viewAllContacts(View view) {
+   public void viewAllContacts(View view) {
         Intent listIntent = new Intent(this, ListActivity.class);
         startActivity(listIntent);
-        //finish();
     }
 }
