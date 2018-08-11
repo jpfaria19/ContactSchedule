@@ -3,6 +3,7 @@ package com.java.desenvolvimento.infnet.contactschedule.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
+import java.io.File;
 import java.io.FileOutputStream;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -106,7 +108,15 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
    public void viewAllContacts(View view) {
-        Intent listIntent = new Intent(this, ListActivity.class);
-        startActivity(listIntent);
+       flag = false;
+       File f = getFileStreamPath(fileName);
+
+       if (f.length() == 0) {
+           Toast.makeText(this, "Sua lista de contatos está vazia", Toast.LENGTH_LONG).show();
+       }else{
+           flag = true;
+           Intent listIntent = new Intent(this, ListActivity.class);
+           startActivity(listIntent);
+       }
     }
 }

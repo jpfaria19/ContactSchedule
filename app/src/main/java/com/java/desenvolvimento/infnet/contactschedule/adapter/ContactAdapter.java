@@ -1,6 +1,5 @@
 package com.java.desenvolvimento.infnet.contactschedule.adapter;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -11,19 +10,15 @@ import android.widget.TextView;
 
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.activity.DetailsContactActivity;
-import com.java.desenvolvimento.infnet.contactschedule.activity.ListActivity;
-import com.java.desenvolvimento.infnet.contactschedule.activity.RegisterActivity;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
 import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter {
 
     List<Contact> contacts;
 
-    RegisterActivity register = new RegisterActivity();
 
     public ContactAdapter(List<Contact> contacts){
         this.contacts = contacts;

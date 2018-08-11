@@ -1,5 +1,6 @@
 package com.java.desenvolvimento.infnet.contactschedule.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.renderscript.ScriptGroup;
@@ -8,7 +9,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.adapter.ContactAdapter;
@@ -34,15 +37,10 @@ public class ListActivity extends AppCompatActivity {
 
     List<Contact> contacts = new ArrayList<>();
 
-    TextView eptTxt;
-    boolean flag = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
-        eptTxt = findViewById(R.id.listEmpty);
 
         contactAdapter = new ContactAdapter(contacts);
         recyclerView = findViewById(R.id.recyclerView);
@@ -61,32 +59,22 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         FileInputStream fis = null;
-                        flag = false;
                         try {
-                            File f = getFileStreamPath(fileName);
-
-                            if (f.length() == 0) {
-                                eptTxt.setText("A lista está vazia");
-                                eptTxt.setVisibility(View.VISIBLE);
-                            } else {
-                                fis = openFileInput(fileName);
-                                InputStreamReader isr = new InputStreamReader(fis);
-                                BufferedReader br = new BufferedReader(isr);
-                                String line = br.readLine();
-                                flag = true;
-                                while (line != null) {
-                                    if (line.equals("#")) {
-                                        String name = br.readLine();
-                                        String phone = br.readLine();
-                                        String email = br.readLine();
-                                        String cidade = br.readLine();
-                                        Contact contact = new Contact(name, phone, email, cidade);
-                                        contacts.add(contact);
-                                    }
-                                    line = br.readLine();
+                            fis = openFileInput(fileName);
+                            InputStreamReader isr = new InputStreamReader(fis);
+                            BufferedReader br = new BufferedReader(isr);
+                            String line = br.readLine();
+                            while (line != null) {
+                                if (line.equals("#")) {
+                                    String name = br.readLine();
+                                    String phone = br.readLine();
+                                    String email = br.readLine();
+                                    String cidade = br.readLine();
+                                    Contact contact = new Contact(name, phone, email, cidade);
+                                    contacts.add(contact);
                                 }
+                                line = br.readLine();
                             }
-
                         } catch (final FileNotFoundException fileNotFound) {
                             fileNotFound.printStackTrace();
                         } catch (IOException e) {
