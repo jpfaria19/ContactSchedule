@@ -54,7 +54,7 @@ public class RegisterActivity extends AppCompatActivity {
         flag = false;
 
         if (edtName.getText().toString().equals("")) {
-            Toast.makeText(this, "Significa que entrou aqui", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Por favor, preencha o campo nome", Toast.LENGTH_LONG).show();
             flag = true;
         }
         if (edtCity.getText().toString().equals("")) {
@@ -117,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
            flag = true;
            Intent listIntent = new Intent(this, ListActivity.class);
            startActivity(listIntent);
+           finish();
        }
     }
 }
