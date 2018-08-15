@@ -100,6 +100,8 @@ public class RegisterActivity extends AppCompatActivity {
         if (!flag) {
             Toast.makeText(this, "SALVEI", Toast.LENGTH_LONG).show();
         }
+
+        //TODO: IMPLEMENT DATABASE FIREBASE FOR SAVE CONTACT
     /*        try {
                 outputStream = openFileOutput(String.valueOf(fileName), Context.MODE_APPEND | Context.MODE_PRIVATE);
 
