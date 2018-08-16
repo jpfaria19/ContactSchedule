@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "679683075842",
+    "firebase_url": "https://contactschedule-tp3.firebaseio.com",
+    "project_id": "contactschedule-tp3",
+    "storage_bucket": "contactschedule-tp3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679683075842:android:cebe8d2458d10866",
+        "android_client_info": {
+          "package_name": "com.java.desenvolvimento.infnet.contactschedule.activity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679683075842-fu853fheqdpqlhmjlkgfrrcvnpc6blus.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.java.desenvolvimento.infnet.contactschedule.activity",
+            "certificate_hash": "d4d504530de476530d83cb041e23af690a767865"
+          }
+        },
+        {
+          "client_id": "679683075842-vio2hit9uuk2ikjdll4s432b4uq5tmg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOMpo0D1zZuLwhKd_pepOSPSpTkjq2l9E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679683075842-vio2hit9uuk2ikjdll4s432b4uq5tmg7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

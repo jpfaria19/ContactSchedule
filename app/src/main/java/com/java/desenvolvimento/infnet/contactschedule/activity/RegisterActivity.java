@@ -1,11 +1,8 @@
 package com.java.desenvolvimento.infnet.contactschedule.activity;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v7.app.AlertDialog;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -13,23 +10,27 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.flags.IFlagProvider;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.java.desenvolvimento.infnet.contactschedule.DAO.ConfigureFirebase;
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.regex.Pattern;
-
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText edtName, edtPassword, edtEmail, edtPhone, edtCellPhone, edtCPF, edtCity;
+    private EditText edtName, edtPassword, edtEmail, edtPhone, edtCellPhone, edtCPF, edtCity;
 
     boolean flag = false;
 
-    int passwordLength = 6;
+    private Contact contato;
 
-    //String fileName = "listContacts.txt";
-    //FileOutputStream outputStream;
+    private FirebaseDatabase database;
+    private DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtCity.getText().clear();
     }
 
-    private boolean isEmail(EditText text){
+    private boolean isEmail(EditText text) {
         CharSequence chrEmail = text.getText().toString();
         return (!TextUtils.isEmpty(chrEmail) && Patterns.EMAIL_ADDRESS.matcher(chrEmail).matches());
     }
@@ -69,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
             edtName.setError("O campo nome não pode ficar em branco.");
             flag = true;
         }
-        if (edtPassword.getText().toString().isEmpty()){
+        if (edtPassword.getText().toString().isEmpty()) {
             edtPassword.setError("O campo senha não pode ficar em branco.");
             flag = true;
         }
@@ -97,55 +98,17 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void saveContact(View view) {
         validateForm();
+
         if (!flag) {
             Toast.makeText(this, "SALVEI", Toast.LENGTH_LONG).show();
         }
 
         //TODO: IMPLEMENT DATABASE FIREBASE FOR SAVE CONTACT
-    /*        try {
-                outputStream = openFileOutput(String.valueOf(fileName), Context.MODE_APPEND | Context.MODE_PRIVATE);
-
-                Contact contatin = new Contact(edtName.getText().toString(), edtPhone.getText().toString(), edtEmail.getText().toString(), edtCity.getText().toString());
-                contatin.setName(edtName.getText().toString());
-                contatin.setPhone(edtPhone.getText().toString());
-                contatin.setEmail(edtEmail.getText().toString());
-                contatin.setCity(edtCity.getText().toString());
-
-
-                String separetor = "#";
-
-                outputStream.write(separetor.getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.write(contatin.getName().getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.write(contatin.getPhone().getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.write(contatin.getEmail().getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.write(contatin.getCity().getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.close();
-
-                Toast.makeText(this, "Registro salvo com sucesso", Toast.LENGTH_LONG).show();
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }*/
     }
 
     public void viewAllContacts(View view) {
-
         Toast.makeText(this, "Sua lista de contatos está vazia", Toast.LENGTH_LONG).show();
         Intent listIntent = new Intent(this, ListActivity.class);
         startActivity(listIntent);
-
-       /*flag = false;
-       File f = getFileStreamPath(fileName);
-       if (f.length() == 0) {
-       }else{
-           flag = true;
-       }*/
     }
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Contact {
 
+    private int Id;
     private String Name;
     private String Password;
     private String Email;
@@ -14,7 +15,12 @@ public class Contact {
     private String City;
     private Date Moment;
 
-    public Contact(String name, String password, String email, String phone, double cellPhone, double cpf, String city) {
+    public Contact(){
+
+    }
+
+    public Contact(int id, String name, String password, String email, String phone, double cellPhone, double cpf, String city) {
+        Id = id;
         Name = name;
         Password = password;
         Email = email;
@@ -26,6 +32,13 @@ public class Contact {
         this.Moment = Calendar.getInstance().getTime();
     }
 
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
 
     public String getName() {
         return Name;
