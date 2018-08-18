@@ -1,13 +1,11 @@
 package com.java.desenvolvimento.infnet.contactschedule.DAO;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class ConfigureFirebase {
 
     private static DatabaseReference referenceFirebase;
-    private static FirebaseAuth firebaseAuth;
 
 
     public static DatabaseReference getFirebase(){
@@ -15,13 +13,5 @@ public class ConfigureFirebase {
             referenceFirebase = FirebaseDatabase.getInstance().getReference();
         }
         return referenceFirebase;
-    }
-
-    public static FirebaseAuth getFirebaseAuth(){
-        if (firebaseAuth == null){
-            firebaseAuth = FirebaseAuth.getInstance();
-        }
-
-        return firebaseAuth;
     }
 }

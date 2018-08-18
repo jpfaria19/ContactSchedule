@@ -4,26 +4,34 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.java.desenvolvimento.infnet.contactschedule.DAO.ConfigureFirebase;
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText edtName, edtPassword, edtEmail, edtPhone, edtCellPhone, edtCPF, edtCity;
-
-    boolean flag = false;
-
-    private Contact contato;
-
-    private FirebaseDatabase database;
+    private EditText edtName;
+    private EditText edtPassword;
+    private EditText edtEmail;
+    private EditText edtPhone;
+    private EditText edtCellPhone;
+    private EditText edtCPF;
+    private EditText edtCity;
+    private Contact contact = new Contact();
+    //private FirebaseDatabase database;
     private DatabaseReference reference;
+    boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +45,32 @@ public class RegisterActivity extends AppCompatActivity {
         edtCellPhone = findViewById(R.id.edtCellPhone);
         edtCPF = findViewById(R.id.edtCPF);
         edtCity = findViewById(R.id.edtCity);
-    }
 
+        //Persistindo dados offline
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
+        reference = FirebaseDatabase.getInstance().getReference(".info/connected");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    Toast.makeText(RegisterActivity.this, "CONNECTED", Toast.LENGTH_LONG).show();
+                    System.out.println("connected");
+                } else {
+                    Toast.makeText(RegisterActivity.this, "NOT CONNECTED", Toast.LENGTH_LONG).show();
+                    System.out.println("not connected");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Toast.makeText(RegisterActivity.this, "Listener was cancelled", Toast.LENGTH_LONG).show();
+                System.err.println("Listener was cancelled");
+            }
+        });
+
+    }
 
     public void clearForm(View view) {
         edtName.getText().clear();
@@ -50,6 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtCity.getText().clear();
     }
 
+    //Validação exclusiva para e-mail
     private boolean isEmail(EditText text) {
         CharSequence chrEmail = text.getText().toString();
         return (!TextUtils.isEmpty(chrEmail) && Patterns.EMAIL_ADDRESS.matcher(chrEmail).matches());
@@ -91,12 +124,36 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void saveContact(View view) {
         validateForm();
-
         if (!flag) {
-            Toast.makeText(this, "SALVEI", Toast.LENGTH_LONG).show();
-        }
+            contact.setName(edtName.getText().toString());
+            contact.setPassword(edtPassword.getText().toString());
+            contact.setEmail(edtEmail.getText().toString());
+            contact.setPhone(Double.parseDouble(edtPhone.getText().toString()));
+            contact.setCellPhone(Double.parseDouble(edtCellPhone.getText().toString()));
+            contact.setCPF(Double.parseDouble(edtCPF.getText().toString()));
+            contact.setCity(edtCity.getText().toString());
 
-        //TODO: IMPLEMENT DATABASE FIREBASE FOR SAVE CONTACT
+            insertingContact(contact);
+
+            //Manter os dados armazenados sincronizados com o Firebase Realtime.
+            reference = FirebaseDatabase.getInstance().getReference("scores");
+            reference.keepSynced(true);
+
+            clearForm(view);
+        }
+    }
+
+    private boolean insertingContact(Contact contact) {
+        try {
+            reference = ConfigureFirebase.getFirebase().child("contatos");
+            reference.push().setValue(contact);
+            Toast.makeText(this, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show();
+            return true;
+        } catch (Exception e) {
+            Toast.makeText(this, "Erro ao cadastrar usuário.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public void viewAllContacts(View view) {

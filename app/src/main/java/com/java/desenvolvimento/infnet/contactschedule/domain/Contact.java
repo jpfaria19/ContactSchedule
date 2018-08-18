@@ -1,44 +1,18 @@
 package com.java.desenvolvimento.infnet.contactschedule.domain;
 
-import java.util.Calendar;
+
 import java.util.Date;
 
 public class Contact {
 
-    private int Id;
     private String Name;
     private String Password;
     private String Email;
-    private String Phone;
+    private double Phone;
     private double CellPhone;
     private double CPF;
     private String City;
     private Date Moment;
-
-    public Contact(){
-
-    }
-
-    public Contact(int id, String name, String password, String email, String phone, double cellPhone, double cpf, String city) {
-        Id = id;
-        Name = name;
-        Password = password;
-        Email = email;
-        Phone = phone;
-        CellPhone = cellPhone;
-        CPF = cpf;
-        City = city;
-
-        this.Moment = Calendar.getInstance().getTime();
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
 
     public String getName() {
         return Name;
@@ -48,10 +22,12 @@ public class Contact {
         Name = name;
     }
 
+    //@Exclude -> Faz com que a senha não seja gravada no database
     public String getPassword() {
         return Password;
     }
 
+    //@Exclude -> Faz com que a senha não seja gravada no database
     public void setPassword(String password) {
         Password = password;
     }
@@ -64,11 +40,11 @@ public class Contact {
         this.Email = email;
     }
 
-    public String getPhone() {
+    public double getPhone() {
         return Phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(double phone) {
         Phone = phone;
     }
 
