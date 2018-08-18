@@ -2,6 +2,8 @@ package com.java.desenvolvimento.infnet.contactschedule.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.service.autofill.Dataset;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +23,7 @@ import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private static final String TAG = "";
     private EditText edtName;
     private EditText edtPassword;
     private EditText edtEmail;
@@ -32,11 +35,15 @@ public class RegisterActivity extends AppCompatActivity {
     //private FirebaseDatabase database;
     private DatabaseReference reference;
     boolean flag = false;
+    boolean flagSnapshot = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        //Persistindo dados offline
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         edtName = findViewById(R.id.edtName);
         edtPassword = findViewById(R.id.edtPassword);
@@ -46,27 +53,31 @@ public class RegisterActivity extends AppCompatActivity {
         edtCPF = findViewById(R.id.edtCPF);
         edtCity = findViewById(R.id.edtCity);
 
-        //Persistindo dados offline
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         reference = FirebaseDatabase.getInstance().getReference(".info/connected");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                flagSnapshot = false;
                 boolean connected = snapshot.getValue(Boolean.class);
                 if (connected) {
                     Toast.makeText(RegisterActivity.this, "CONNECTED", Toast.LENGTH_LONG).show();
-                    System.out.println("connected");
+                    Log.d(TAG, "connected");
                 } else {
                     Toast.makeText(RegisterActivity.this, "NOT CONNECTED", Toast.LENGTH_LONG).show();
-                    System.out.println("not connected");
+                    Log.d(TAG, "not connected");
+                }
+
+                //FlagSnapshot não está funcionando corretamente, está passando como se sempre existisse o database.
+                if (!snapshot.exists()){
+                    flagSnapshot = true;
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 Toast.makeText(RegisterActivity.this, "Listener was cancelled", Toast.LENGTH_LONG).show();
-                System.err.println("Listener was cancelled");
+                Log.d(TAG,"Listener was cancelled");
             }
         });
 
@@ -128,9 +139,9 @@ public class RegisterActivity extends AppCompatActivity {
             contact.setName(edtName.getText().toString());
             contact.setPassword(edtPassword.getText().toString());
             contact.setEmail(edtEmail.getText().toString());
-            contact.setPhone(Double.parseDouble(edtPhone.getText().toString()));
-            contact.setCellPhone(Double.parseDouble(edtCellPhone.getText().toString()));
-            contact.setCPF(Double.parseDouble(edtCPF.getText().toString()));
+            contact.setPhone(Integer.parseInt(edtPhone.getText().toString()));
+            contact.setCellPhone(Integer.parseInt(edtCellPhone.getText().toString()));
+            contact.setCPF(Integer.parseInt(edtCPF.getText().toString()));
             contact.setCity(edtCity.getText().toString());
 
             insertingContact(contact);
@@ -157,8 +168,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void viewAllContacts(View view) {
-        Toast.makeText(this, "Sua lista de contatos está vazia", Toast.LENGTH_LONG).show();
-        Intent listIntent = new Intent(this, ListActivity.class);
-        startActivity(listIntent);
+        if (flagSnapshot){
+            Toast.makeText(RegisterActivity.this, "Sua lista de contatos está vazia", Toast.LENGTH_LONG).show();
+            Intent listIntent = new Intent(RegisterActivity.this, ListActivity.class);
+            startActivity(listIntent);
+        }else {
+            Toast.makeText(RegisterActivity.this, "Essa porra existe", Toast.LENGTH_LONG).show();
+        }
     }
 }

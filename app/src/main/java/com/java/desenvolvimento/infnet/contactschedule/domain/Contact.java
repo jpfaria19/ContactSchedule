@@ -1,6 +1,7 @@
 package com.java.desenvolvimento.infnet.contactschedule.domain;
 
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Contact {
@@ -8,11 +9,12 @@ public class Contact {
     private String Name;
     private String Password;
     private String Email;
-    private double Phone;
-    private double CellPhone;
-    private double CPF;
+    private int Phone;
+    private int CellPhone;
+    private int CPF;
     private String City;
     private Date Moment;
+
 
     public String getName() {
         return Name;
@@ -40,27 +42,27 @@ public class Contact {
         this.Email = email;
     }
 
-    public double getPhone() {
+    public int getPhone() {
         return Phone;
     }
 
-    public void setPhone(double phone) {
+    public void setPhone(int phone) {
         Phone = phone;
     }
 
-    public double getCellPhone() {
+    public int getCellPhone() {
         return CellPhone;
     }
 
-    public void setCellPhone(double cellPhone) {
+    public void setCellPhone(int cellPhone) {
         CellPhone = cellPhone;
     }
 
-    public double getCPF() {
+    public int getCPF() {
         return CPF;
     }
 
-    public void setCPF(double CPF) {
+    public void setCPF(int CPF) {
         this.CPF = CPF;
     }
 

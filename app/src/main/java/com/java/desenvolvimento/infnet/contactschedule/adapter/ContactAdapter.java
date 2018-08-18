@@ -38,7 +38,7 @@ public class ContactAdapter extends RecyclerView.Adapter {
         ContactViewHolder cvh = (ContactViewHolder) holder;
         cvh.name.setText(contact.getName());
         cvh.cidade.setText(contact.getCity());
-        cvh.date.setText(DateFormat.getTimeInstance().format(contact.getMoment()));
+        //cvh.date.setText(DateFormat.getTimeInstance().format(contact.getMoment()));
 
     }
 
@@ -51,13 +51,13 @@ public class ContactAdapter extends RecyclerView.Adapter {
 
         TextView name;
         TextView cidade;
-        TextView date;
+        //TextView date;
 
         private ContactViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.textName);
             cidade = itemView.findViewById(R.id.textCity);
-            date = itemView.findViewById(R.id.textDate);
+            //date = itemView.findViewById(R.id.textDate);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,12 +68,19 @@ public class ContactAdapter extends RecyclerView.Adapter {
 
                     String getName = contact.getName();
                     detailContact.putExtra("name",getName);
+                    String getPassword = contact.getPassword();
+                    detailContact.putExtra("password", getPassword);
                     String getEmail = contact.getEmail();
                     detailContact.putExtra("email", getEmail);
+                    int getPhone = contact.getPhone();
+                    detailContact.putExtra("phone", getPhone);
+                    int getCellPhone = contact.getCellPhone();
+                    detailContact.putExtra("cellphone", getCellPhone);
+                    int getCPF = contact.getCPF();
+                    detailContact.putExtra("cpf", getCPF);
                     String getCity = contact.getCity();
                     detailContact.putExtra("city", getCity);
-                    //String getPhone = contact.getPhone();
-                    //detailContact.putExtra("phone", getPhone);
+
 
                     v.getContext().startActivity(detailContact);
                 }
