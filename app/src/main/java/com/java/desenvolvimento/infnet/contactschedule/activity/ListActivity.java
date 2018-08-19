@@ -52,7 +52,7 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
-    @Override
+   /* @Override
     protected void onStart() {
         super.onStart();
 
@@ -96,7 +96,7 @@ public class ListActivity extends AppCompatActivity {
                     }
                 }
         ).start();
-    }
+    }*/
 
 
     public void registerNewContact(View view) {

@@ -6,17 +6,22 @@ import java.util.Date;
 public class Contact {
 
     private String Name;
+    private String Password;
     private String Email;
+    private String Phone;
+    private double CellPhone;
+    private double CPF;
     private String City;
     private Date Moment;
-    private String Phone;
 
-
-    public Contact(String name, String email, String city, String phone) {
+    public Contact(String name, String password, String email, String phone, double cellPhone, double cpf, String city) {
         Name = name;
+        Password = password;
         Email = email;
-        City = city;
         Phone = phone;
+        CellPhone = cellPhone;
+        CPF = cpf;
+        City = city;
 
         this.Moment = Calendar.getInstance().getTime();
     }
@@ -30,6 +35,14 @@ public class Contact {
         Name = name;
     }
 
+    public String getPassword() {
+        return Password;
+    }
+
+    public void setPassword(String password) {
+        Password = password;
+    }
+
     public String getEmail() {
         return Email;
     }
@@ -38,20 +51,36 @@ public class Contact {
         this.Email = email;
     }
 
-    public String getCity() {
-        return City;
-    }
-
-    public void setCity(String city) {
-        City = city;
-    }
-
     public String getPhone() {
         return Phone;
     }
 
     public void setPhone(String phone) {
         Phone = phone;
+    }
+
+    public double getCellPhone() {
+        return CellPhone;
+    }
+
+    public void setCellPhone(double cellPhone) {
+        CellPhone = cellPhone;
+    }
+
+    public double getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(double CPF) {
+        this.CPF = CPF;
+    }
+
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String city) {
+        City = city;
     }
 
     public Date getMoment() {
