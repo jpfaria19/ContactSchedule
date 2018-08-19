@@ -116,29 +116,5 @@ public class ListActivity extends AppCompatActivity {
                 }
         ).start();
     }
-
-    public void registerNewContact(View view) {
-        Intent newContact = new Intent(ListActivity.this, RegisterActivity.class);
-        startActivity(newContact);
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("JÁ ESTÁ SAINDO ?? :/ ")
-                .setMessage("Você tem certeza que quer sair do app? Se quiser criar um novo contato é só clicar no + que fica aqui em baixo.")
-                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-
-                })
-                .setNegativeButton("Não", null)
-                .show();
-    }
-
 }
 

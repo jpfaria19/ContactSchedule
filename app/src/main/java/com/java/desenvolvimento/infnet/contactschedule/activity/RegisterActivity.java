@@ -2,8 +2,6 @@ package com.java.desenvolvimento.infnet.contactschedule.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.service.autofill.Dataset;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,7 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtCPF;
     private EditText edtCity;
     private Contact contact = new Contact();
-    //private FirebaseDatabase database;
     private DatabaseReference reference;
     boolean flag = false;
     boolean flagSnapshot = false;
@@ -42,7 +39,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //Persistindo dados offline
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         edtName = findViewById(R.id.edtName);
@@ -53,31 +49,18 @@ public class RegisterActivity extends AppCompatActivity {
         edtCPF = findViewById(R.id.edtCPF);
         edtCity = findViewById(R.id.edtCity);
 
-
-        reference = FirebaseDatabase.getInstance().getReference(".info/connected");
+        reference = FirebaseDatabase.getInstance().getReference("contatos");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                flagSnapshot = false;
-                boolean connected = snapshot.getValue(Boolean.class);
-                if (connected) {
-                    Toast.makeText(RegisterActivity.this, "CONNECTED", Toast.LENGTH_LONG).show();
-                    Log.d(TAG, "connected");
-                } else {
-                    Toast.makeText(RegisterActivity.this, "NOT CONNECTED", Toast.LENGTH_LONG).show();
-                    Log.d(TAG, "not connected");
-                }
-
-                //FlagSnapshot não está funcionando corretamente, está passando como se sempre existisse o database.
-                if (!snapshot.exists()){
-                    flagSnapshot = true;
-                }
+                boolean exist = snapshot.hasChildren();
+                flagSnapshot = !exist;
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Toast.makeText(RegisterActivity.this, "Listener was cancelled", Toast.LENGTH_LONG).show();
-                Log.d(TAG,"Listener was cancelled");
+                Toast.makeText(RegisterActivity.this, "Erro de conexão com o banco de dados, tente cadastrar novamente por favor.", Toast.LENGTH_LONG).show();
+                Log.v(TAG,"Erro: " + error);
             }
         });
 
@@ -147,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
             insertingContact(contact);
 
             //Manter os dados armazenados sincronizados com o Firebase Realtime.
-            reference = FirebaseDatabase.getInstance().getReference("scores");
+            reference = FirebaseDatabase.getInstance().getReference("contatos");
             reference.keepSynced(true);
 
             clearForm(view);
@@ -162,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         } catch (Exception e) {
             Toast.makeText(this, "Erro ao cadastrar usuário.", Toast.LENGTH_LONG).show();
-            e.printStackTrace();
+            Log.v(TAG, "ERRO: " + e);
             return false;
         }
     }
@@ -170,10 +153,9 @@ public class RegisterActivity extends AppCompatActivity {
     public void viewAllContacts(View view) {
         if (flagSnapshot){
             Toast.makeText(RegisterActivity.this, "Sua lista de contatos está vazia", Toast.LENGTH_LONG).show();
+        }else {
             Intent listIntent = new Intent(RegisterActivity.this, ListActivity.class);
             startActivity(listIntent);
-        }else {
-            Toast.makeText(RegisterActivity.this, "Essa porra existe", Toast.LENGTH_LONG).show();
         }
     }
 }

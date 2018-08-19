@@ -13,6 +13,7 @@ import com.java.desenvolvimento.infnet.contactschedule.activity.DetailsContactAc
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter {
@@ -37,8 +38,9 @@ public class ContactAdapter extends RecyclerView.Adapter {
 
         ContactViewHolder cvh = (ContactViewHolder) holder;
         cvh.name.setText(contact.getName());
+        //ERRO EM EXECUÇÃO: Attempt to invoke virtual method 'long java.util.Date.getTime()' on a null object reference
+        cvh.date.setText(DateFormat.getTimeInstance().format(contact.getMoment()));
         cvh.cidade.setText(contact.getCity());
-        //cvh.date.setText(DateFormat.getTimeInstance().format(contact.getMoment()));
 
     }
 
@@ -51,13 +53,13 @@ public class ContactAdapter extends RecyclerView.Adapter {
 
         TextView name;
         TextView cidade;
-        //TextView date;
+        TextView date;
 
         private ContactViewHolder(View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.textName);
             cidade = itemView.findViewById(R.id.textCity);
-            //date = itemView.findViewById(R.id.textDate);
+            date = itemView.findViewById(R.id.textDate);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,7 +82,6 @@ public class ContactAdapter extends RecyclerView.Adapter {
                     detailContact.putExtra("cpf", getCPF);
                     String getCity = contact.getCity();
                     detailContact.putExtra("city", getCity);
-
 
                     v.getContext().startActivity(detailContact);
                 }

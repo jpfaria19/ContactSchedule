@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.java.desenvolvimento.infnet.contactschedule.R;
 
+import java.util.Date;
+
 public class DetailsContactActivity extends AppCompatActivity {
 
     TextView detailName, detailPassword, detailEmail, detailPhone, detailCellPhone, detailCpf, detailCity;
@@ -61,31 +63,6 @@ public class DetailsContactActivity extends AppCompatActivity {
         //CIDADE
         String Cidade = extra.getString("city");
         detailCity.setText(Cidade);
-
-    }
-
-    public void registerNewContact(View view){
-        Intent newContact = new Intent(this, RegisterActivity.class);
-        startActivity(newContact);
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("JÁ ESTÁ SAINDO ?? :/ ")
-                .setMessage("Você tem certeza que quer sair do app? Se quiser criar um novo contato é só clicar no + que fica aqui em baixo.")
-                .setPositiveButton("Sim", new DialogInterface.OnClickListener()
-                {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-
-                })
-                .setNegativeButton("Não", null)
-                .show();
     }
 
 }

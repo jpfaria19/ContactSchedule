@@ -15,6 +15,21 @@ public class Contact {
     private String City;
     private Date Moment;
 
+    public Contact() {
+    }
+
+    public Contact(String name, String password, String email, int phone, int cellPhone, int cpf, String city) {
+        Name = name;
+        Password = password;
+        Email = email;
+        Phone = phone;
+        CellPhone = cellPhone;
+        CPF = cpf;
+        City = city;
+
+        //Pega data e hora da criação
+        this.Moment = Calendar.getInstance().getTime();
+    }
 
     public String getName() {
         return Name;

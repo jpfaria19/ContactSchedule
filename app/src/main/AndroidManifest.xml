@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.RegisterActivity"
-            android:noHistory="true">
+            android:name=".activity.RegisterActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
