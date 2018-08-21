@@ -74,6 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
         edtCellPhone.getText().clear();
         edtCPF.getText().clear();
         edtCity.getText().clear();
+
+        edtName.requestFocus();
     }
 
     //Validação exclusiva para e-mail
@@ -134,6 +136,7 @@ public class RegisterActivity extends AppCompatActivity {
             reference.keepSynced(true);
 
             clearForm(view);
+            edtName.requestFocus();
         }
     }
 
