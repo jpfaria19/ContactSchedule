@@ -1,8 +1,11 @@
 package com.java.desenvolvimento.infnet.contactschedule.domain;
 
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
+import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 
 public class Contact {
 
@@ -13,10 +16,11 @@ public class Contact {
     private int CellPhone;
     private int CPF;
     private String City;
-    private Date Moment;
+    private LocalDateTime Moment;
 
     public Contact() {
     }
+
 
     public Contact(String name, String password, String email, int phone, int cellPhone, int cpf, String city) {
         Name = name;
@@ -26,9 +30,6 @@ public class Contact {
         CellPhone = cellPhone;
         CPF = cpf;
         City = city;
-
-        //Pega data e hora da criação
-        this.Moment = Calendar.getInstance().getTime();
     }
 
     public String getName() {
@@ -89,11 +90,12 @@ public class Contact {
         City = city;
     }
 
-    public Date getMoment() {
+    public LocalDateTime getMoment() {
         return Moment;
     }
 
-    public void setMoment(Date moment) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setMoment(LocalDateTime moment) {
         Moment = moment;
     }
 }

@@ -1,7 +1,9 @@
 package com.java.desenvolvimento.infnet.contactschedule.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,6 +20,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.java.desenvolvimento.infnet.contactschedule.DAO.ConfigureFirebase;
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
+
+import java.time.LocalDateTime;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -118,6 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveContact(View view) {
         validateForm();
         if (!flag) {
@@ -128,6 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
             contact.setCellPhone(Integer.parseInt(edtCellPhone.getText().toString()));
             contact.setCPF(Integer.parseInt(edtCPF.getText().toString()));
             contact.setCity(edtCity.getText().toString());
+            contact.setMoment(LocalDateTime.now()); //Usando LocalDateTime.
 
             insertingContact(contact);
 
