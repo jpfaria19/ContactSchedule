@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.java.desenvolvimento.infnet.contactschedule.DAO.ConfigureFirebase;
 import com.java.desenvolvimento.infnet.contactschedule.R;
@@ -35,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtCity;
     private Contact contact = new Contact();
     private DatabaseReference reference;
+    private FirebaseDatabase database;
     boolean flag = false;
     boolean flagSnapshot = false;
 
@@ -53,6 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
         edtCPF = findViewById(R.id.edtCPF);
         edtCity = findViewById(R.id.edtCity);
 
+
         reference = FirebaseDatabase.getInstance().getReference("contatos");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Log.v(TAG,"Erro: " + error);
             }
         });
+
 
     }
 
@@ -133,7 +137,6 @@ public class RegisterActivity extends AppCompatActivity {
             contact.setCellPhone(Integer.parseInt(edtCellPhone.getText().toString()));
             contact.setCPF(Integer.parseInt(edtCPF.getText().toString()));
             contact.setCity(edtCity.getText().toString());
-            contact.setMoment(LocalDateTime.now()); //Usando LocalDateTime.
 
             insertingContact(contact);
 

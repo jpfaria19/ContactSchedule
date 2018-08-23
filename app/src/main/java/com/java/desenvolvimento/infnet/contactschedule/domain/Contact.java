@@ -4,8 +4,14 @@ package com.java.desenvolvimento.infnet.contactschedule.domain;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.ServerValue;
+
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Contact {
 
@@ -16,11 +22,12 @@ public class Contact {
     private int CellPhone;
     private int CPF;
     private String City;
-    private LocalDateTime Moment;
+    private long timestamp;
+    private HashMap<String, Object> MapMoment;
+
 
     public Contact() {
     }
-
 
     public Contact(String name, String password, String email, int phone, int cellPhone, int cpf, String city) {
         Name = name;
@@ -30,7 +37,26 @@ public class Contact {
         CellPhone = cellPhone;
         CPF = cpf;
         City = city;
+
+        HashMap<String, Object> timestampNow = new HashMap<>();
+        timestampNow.put("timestamp", ServerValue.TIMESTAMP);
+        this.MapMoment = timestampNow;
     }
+
+
+    public Map<String, Object> getMapMoment(){
+        return MapMoment;
+    }
+
+    @Exclude
+    public long getMapMomentLong(){
+        return (long)MapMoment.get("timestamp");
+    }
+
+    /*@Exclude
+    public Date getMoment(){
+        return new Date(timestamp);
+    }*/
 
     public String getName() {
         return Name;
@@ -90,12 +116,4 @@ public class Contact {
         City = city;
     }
 
-    public LocalDateTime getMoment() {
-        return Moment;
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void setMoment(LocalDateTime moment) {
-        Moment = moment;
-    }
 }

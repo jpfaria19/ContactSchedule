@@ -13,12 +13,15 @@ import com.java.desenvolvimento.infnet.contactschedule.activity.DetailsContactAc
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 public class ContactAdapter extends RecyclerView.Adapter {
 
     List<Contact> contacts;
+
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 
 
     public ContactAdapter(List<Contact> contacts){
@@ -38,8 +41,8 @@ public class ContactAdapter extends RecyclerView.Adapter {
 
         ContactViewHolder cvh = (ContactViewHolder) holder;
         cvh.name.setText(contact.getName());
-        //ERRO EM EXECUÇÃO: Attempt to invoke virtual method 'long java.util.Date.getTime()' on a null object reference
-        cvh.date.setText(DateFormat.getTimeInstance().format(contact.getMoment()));
+        //ERRO: Cannot format given Object as a Date
+        cvh.date.setText(sdf.format(contact.getMapMoment()));
         cvh.cidade.setText(contact.getCity());
 
     }
