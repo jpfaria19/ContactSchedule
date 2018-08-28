@@ -34,7 +34,7 @@ public class DetailsContactActivity extends AppCompatActivity {
         //NOME
         String Name = extra.getString("name");
         detailName.setText(Name);
-        getSupportActionBar().setTitle("");
+        getSupportActionBar().setTitle("Detalhes do " + Name);
 
         //SENHA
         String Senha = extra.getString("password");
@@ -56,8 +56,7 @@ public class DetailsContactActivity extends AppCompatActivity {
         detailCellPhone.setText(Celular);
 
         //CPF
-        int CPFInt = extra.getInt("cpf");
-        String CPF = String.valueOf(CPFInt);
+        String CPF = extra.getString("cpf");
         detailCpf.setText(CPF);
 
         //CIDADE
