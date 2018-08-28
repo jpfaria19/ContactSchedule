@@ -14,7 +14,7 @@ public class Contact {
     private String Email;
     private int Phone;
     private int CellPhone;
-    private int CPF;
+    private String CPF;
     private String City;
     private long timestamp;
     private Map<String, String> MapMoment = ServerValue.TIMESTAMP;
@@ -23,7 +23,7 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(String name, String password, String email, int phone, int cellPhone, int cpf, String city) {
+    public Contact(String name, String password, String email, int phone, int cellPhone, String cpf, String city) {
         Name = name;
         Password = password;
         Email = email;
@@ -89,11 +89,11 @@ public class Contact {
         CellPhone = cellPhone;
     }
 
-    public int getCPF() {
+    public String getCPF() {
         return CPF;
     }
 
-    public void setCPF(int CPF) {
+    public void setCPF(String CPF) {
         this.CPF = CPF;
     }
 
