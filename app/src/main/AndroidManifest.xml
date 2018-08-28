@@ -22,13 +22,11 @@
         </activity>
         <activity
             android:name=".activity.ListActivity"
-            android:noHistory="true"
-            android:parentActivityName=".activity.RegisterActivity">
+            android:noHistory="true">
 
         </activity>
         <activity
-            android:name=".activity.DetailsContactActivity"
-            android:parentActivityName=".activity.RegisterActivity">
+            android:name=".activity.DetailsContactActivity">
 
         </activity>
     </application>
