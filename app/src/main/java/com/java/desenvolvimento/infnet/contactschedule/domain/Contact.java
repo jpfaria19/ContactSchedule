@@ -1,16 +1,10 @@
 package com.java.desenvolvimento.infnet.contactschedule.domain;
 
 
-import android.os.Build;
-import android.support.annotation.RequiresApi;
-
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
 
-import java.time.LocalDateTime;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Contact {
@@ -23,7 +17,7 @@ public class Contact {
     private int CPF;
     private String City;
     private long timestamp;
-    private HashMap<String, Object> MapMoment;
+    private Map<String, String> MapMoment = ServerValue.TIMESTAMP;
 
 
     public Contact() {
@@ -37,26 +31,21 @@ public class Contact {
         CellPhone = cellPhone;
         CPF = cpf;
         City = city;
-
-        HashMap<String, Object> timestampNow = new HashMap<>();
-        timestampNow.put("timestamp", ServerValue.TIMESTAMP);
-        this.MapMoment = timestampNow;
     }
 
 
-    public Map<String, Object> getMapMoment(){
+    public Map<String, String> getMapMoment(){
         return MapMoment;
     }
 
-    @Exclude
-    public long getMapMomentLong(){
-        return (long)MapMoment.get("timestamp");
+    public void setMapMoment(long Moment){
+        timestamp = Moment;
     }
 
-    /*@Exclude
+    @Exclude
     public Date getMoment(){
         return new Date(timestamp);
-    }*/
+    }
 
     public String getName() {
         return Name;
