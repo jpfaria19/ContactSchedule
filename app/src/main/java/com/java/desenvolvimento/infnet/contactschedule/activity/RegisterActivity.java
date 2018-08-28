@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,6 +43,11 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        if (!FirebaseApp.getApps(this).isEmpty()){
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+
         getSupportActionBar().setTitle("Cadastrar um novo contato");
 
         AutoCompleteTextView completeTextView = (AutoCompleteTextView) findViewById(R.id.edtCity);
@@ -50,7 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, states);
         completeTextView.setAdapter(arrayAdapter);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         edtName = findViewById(R.id.edtName);
         edtPassword = findViewById(R.id.edtPassword);
@@ -139,7 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
             contact.setEmail(edtEmail.getText().toString());
             contact.setPhone(Integer.parseInt(edtPhone.getText().toString()));
             contact.setCellPhone(Integer.parseInt(edtCellPhone.getText().toString()));
-            contact.setCPF(Integer.parseInt(edtCPF.getText().toString()));
+            contact.setCPF(edtCPF.getText().toString());
             contact.setCity(edtCity.getText().toString());
 
 
