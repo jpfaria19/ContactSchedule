@@ -1,14 +1,15 @@
 package com.java.desenvolvimento.infnet.contactschedule.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,13 +17,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.java.desenvolvimento.infnet.contactschedule.DAO.ConfigureFirebase;
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
-
-import java.time.LocalDateTime;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -36,14 +34,21 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edtCity;
     private Contact contact = new Contact();
     private DatabaseReference reference;
-    private FirebaseDatabase database;
     boolean flag = false;
     boolean flagSnapshot = false;
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        getSupportActionBar().setTitle("Cadastrar um novo contato");
+
+        AutoCompleteTextView completeTextView = (AutoCompleteTextView) findViewById(R.id.edtCity);
+        String [] states = getResources().getStringArray(R.array.states_array);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, states);
+        completeTextView.setAdapter(arrayAdapter);
 
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
@@ -126,7 +131,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void saveContact(View view) {
         validateForm();
         if (!flag) {
@@ -137,6 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
             contact.setCellPhone(Integer.parseInt(edtCellPhone.getText().toString()));
             contact.setCPF(Integer.parseInt(edtCPF.getText().toString()));
             contact.setCity(edtCity.getText().toString());
+
 
             insertingContact(contact);
 
@@ -152,11 +157,12 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean insertingContact(Contact contact) {
         try {
             reference = ConfigureFirebase.getFirebase().child("contatos");
+            //Insere no firebase (o push() cria uma chave única, um Id para o registro).
             reference.push().setValue(contact);
             Toast.makeText(this, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show();
             return true;
         } catch (Exception e) {
-            Toast.makeText(this, "Erro ao cadastrar usuário.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Erro ao cadastrar usuário! Tente novamente por favor.", Toast.LENGTH_LONG).show();
             Log.v(TAG, "ERRO: " + e);
             return false;
         }
