@@ -3,71 +3,124 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".activity.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edtName"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/nome_completo"
+                android:textColorHighlight = "#7cff88"
+                android:inputType="textPersonName" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/email"
+                android:textColorHighlight = "#7cff88"
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/nome_completo"
-            android:inputType="text" />
+            app:passwordToggleEnabled="true">
 
-        <EditText
-            android:id="@+id/edtEmail"
+            <EditText
+                android:id="@+id/edtPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/senha"
+                android:textColorHighlight = "#7cff88"
+                android:inputType="textPassword" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress" />
+            app:counterEnabled="true"
+            app:counterMaxLength="11">
 
-        <EditText
-            android:id="@+id/edtPassword"
+            <EditText
+                android:id="@+id/edtCPF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/cpf"
+                android:textColorHighlight = "#7cff88"
+                android:inputType="number"
+                android:maxLength="11"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/senha"
-            android:inputType="textPassword" />
+            app:counterEnabled="true"
+            app:counterMaxLength="8">
 
-        <EditText
-            android:id="@+id/edtCPF"
+            <EditText
+                android:id="@+id/edtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/telefone"
+                android:textColorHighlight = "#7cff88"
+                android:inputType="phone"
+                android:maxLength="8"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/cpf"
-            android:inputType="number" />
+            app:counterEnabled="true"
+            app:counterMaxLength="9">
 
-        <EditText
-            android:id="@+id/edtPhone"
+            <EditText
+                android:id="@+id/edtCellPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/celular"
+                android:textColorHighlight = "#7cff88"
+                android:inputType="phone"
+                android:maxLength="9"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/telefone"
-            android:inputType="phone" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/edtCellPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/celular"
-            android:inputType="phone" />
+            <AutoCompleteTextView
+                android:id="@+id/edtCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="@string/cidade"
+                android:textColorHighlight = "#7cff88"
+                android:inputType="text"
+                tools:ignore="LabelFor" />
+        </android.support.design.widget.TextInputLayout>
 
-
-        <EditText
-            android:id="@+id/edtCity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/cidade"
-            android:inputType="text" />
 
         <Button
             android:id="@+id/btnSave"

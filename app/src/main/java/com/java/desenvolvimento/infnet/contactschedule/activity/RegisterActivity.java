@@ -1,40 +1,61 @@
 package com.java.desenvolvimento.infnet.contactschedule.activity;
 
-import android.content.Context;
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.java.desenvolvimento.infnet.contactschedule.DAO.ConfigureFirebase;
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.regex.Pattern;
-
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText edtName, edtPassword, edtEmail, edtPhone, edtCellPhone, edtCPF, edtCity;
-
+    private static final String TAG = "";
+    private EditText edtName;
+    private EditText edtPassword;
+    private EditText edtEmail;
+    private EditText edtPhone;
+    private EditText edtCellPhone;
+    private EditText edtCPF;
+    private EditText edtCity;
+    private Contact contact = new Contact();
+    private DatabaseReference reference;
     boolean flag = false;
+    boolean flagSnapshot = false;
 
-    int passwordLength = 6;
-
-    //String fileName = "listContacts.txt";
-    //FileOutputStream outputStream;
-
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        if (!FirebaseApp.getApps(this).isEmpty()){
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+
+        getSupportActionBar().setTitle("Cadastrar um novo contato");
+
+        AutoCompleteTextView completeTextView = (AutoCompleteTextView) findViewById(R.id.edtCity);
+        String [] states = getResources().getStringArray(R.array.states_array);
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, states);
+        completeTextView.setAdapter(arrayAdapter);
+
 
         edtName = findViewById(R.id.edtName);
         edtPassword = findViewById(R.id.edtPassword);
@@ -43,8 +64,25 @@ public class RegisterActivity extends AppCompatActivity {
         edtCellPhone = findViewById(R.id.edtCellPhone);
         edtCPF = findViewById(R.id.edtCPF);
         edtCity = findViewById(R.id.edtCity);
-    }
 
+
+        reference = FirebaseDatabase.getInstance().getReference("contatos");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean exist = snapshot.hasChildren();
+                flagSnapshot = !exist;
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Toast.makeText(RegisterActivity.this, "Erro de conexão com o banco de dados, tente cadastrar novamente por favor.", Toast.LENGTH_LONG).show();
+                Log.v(TAG,"Erro: " + error);
+            }
+        });
+
+
+    }
 
     public void clearForm(View view) {
         edtName.getText().clear();
@@ -54,9 +92,12 @@ public class RegisterActivity extends AppCompatActivity {
         edtCellPhone.getText().clear();
         edtCPF.getText().clear();
         edtCity.getText().clear();
+
+        edtName.requestFocus();
     }
 
-    private boolean isEmail(EditText text){
+    //Validação exclusiva para e-mail
+    private boolean isEmail(EditText text) {
         CharSequence chrEmail = text.getText().toString();
         return (!TextUtils.isEmpty(chrEmail) && Patterns.EMAIL_ADDRESS.matcher(chrEmail).matches());
     }
@@ -69,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
             edtName.setError("O campo nome não pode ficar em branco.");
             flag = true;
         }
-        if (edtPassword.getText().toString().isEmpty()){
+        if (edtPassword.getText().toString().isEmpty()) {
             edtPassword.setError("O campo senha não pode ficar em branco.");
             flag = true;
         }
@@ -98,54 +139,46 @@ public class RegisterActivity extends AppCompatActivity {
     public void saveContact(View view) {
         validateForm();
         if (!flag) {
-            Toast.makeText(this, "SALVEI", Toast.LENGTH_LONG).show();
+            contact.setName(edtName.getText().toString());
+            contact.setPassword(edtPassword.getText().toString());
+            contact.setEmail(edtEmail.getText().toString());
+            contact.setPhone(Integer.parseInt(edtPhone.getText().toString()));
+            contact.setCellPhone(Integer.parseInt(edtCellPhone.getText().toString()));
+            contact.setCPF(edtCPF.getText().toString());
+            contact.setCity(edtCity.getText().toString());
+
+
+            insertingContact(contact);
+
+            //Manter os dados armazenados sincronizados com o Firebase Realtime.
+            reference = FirebaseDatabase.getInstance().getReference("contatos");
+            reference.keepSynced(true);
+
+            clearForm(view);
+            edtName.requestFocus();
         }
+    }
 
-        //TODO: IMPLEMENT DATABASE FIREBASE FOR SAVE CONTACT
-    /*        try {
-                outputStream = openFileOutput(String.valueOf(fileName), Context.MODE_APPEND | Context.MODE_PRIVATE);
-
-                Contact contatin = new Contact(edtName.getText().toString(), edtPhone.getText().toString(), edtEmail.getText().toString(), edtCity.getText().toString());
-                contatin.setName(edtName.getText().toString());
-                contatin.setPhone(edtPhone.getText().toString());
-                contatin.setEmail(edtEmail.getText().toString());
-                contatin.setCity(edtCity.getText().toString());
-
-
-                String separetor = "#";
-
-                outputStream.write(separetor.getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.write(contatin.getName().getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.write(contatin.getPhone().getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.write(contatin.getEmail().getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.write(contatin.getCity().getBytes());
-                outputStream.write("\n".getBytes());
-                outputStream.close();
-
-                Toast.makeText(this, "Registro salvo com sucesso", Toast.LENGTH_LONG).show();
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }*/
+    private boolean insertingContact(Contact contact) {
+        try {
+            reference = ConfigureFirebase.getFirebase().child("contatos");
+            //Insere no firebase (o push() cria uma chave única, um Id para o registro).
+            reference.push().setValue(contact);
+            Toast.makeText(this, "Usuário cadastrado com sucesso.", Toast.LENGTH_LONG).show();
+            return true;
+        } catch (Exception e) {
+            Toast.makeText(this, "Erro ao cadastrar usuário! Tente novamente por favor.", Toast.LENGTH_LONG).show();
+            Log.v(TAG, "ERRO: " + e);
+            return false;
+        }
     }
 
     public void viewAllContacts(View view) {
-
-        Toast.makeText(this, "Sua lista de contatos está vazia", Toast.LENGTH_LONG).show();
-        Intent listIntent = new Intent(this, ListActivity.class);
-        startActivity(listIntent);
-
-       /*flag = false;
-       File f = getFileStreamPath(fileName);
-       if (f.length() == 0) {
-       }else{
-           flag = true;
-       }*/
+        if (flagSnapshot){
+            Toast.makeText(RegisterActivity.this, "Sua lista de contatos está vazia", Toast.LENGTH_LONG).show();
+        }else {
+            Intent listIntent = new Intent(RegisterActivity.this, ListActivity.class);
+            startActivity(listIntent);
+        }
     }
 }

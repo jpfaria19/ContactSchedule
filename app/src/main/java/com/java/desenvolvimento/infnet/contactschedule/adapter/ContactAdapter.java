@@ -19,7 +19,6 @@ public class ContactAdapter extends RecyclerView.Adapter {
 
     List<Contact> contacts;
 
-
     public ContactAdapter(List<Contact> contacts){
         this.contacts = contacts;
     }
@@ -37,8 +36,8 @@ public class ContactAdapter extends RecyclerView.Adapter {
 
         ContactViewHolder cvh = (ContactViewHolder) holder;
         cvh.name.setText(contact.getName());
-        cvh.cidade.setText(contact.getCity());
         cvh.date.setText(DateFormat.getTimeInstance().format(contact.getMoment()));
+        cvh.cidade.setText(contact.getCity());
 
     }
 
@@ -68,12 +67,18 @@ public class ContactAdapter extends RecyclerView.Adapter {
 
                     String getName = contact.getName();
                     detailContact.putExtra("name",getName);
+                    String getPassword = contact.getPassword();
+                    detailContact.putExtra("password", getPassword);
                     String getEmail = contact.getEmail();
                     detailContact.putExtra("email", getEmail);
+                    int getPhone = contact.getPhone();
+                    detailContact.putExtra("phone", getPhone);
+                    int getCellPhone = contact.getCellPhone();
+                    detailContact.putExtra("cellphone", getCellPhone);
+                    String getCPF = contact.getCPF();
+                    detailContact.putExtra("cpf", getCPF);
                     String getCity = contact.getCity();
                     detailContact.putExtra("city", getCity);
-                    String getPhone = contact.getPhone();
-                    detailContact.putExtra("phone", getPhone);
 
                     v.getContext().startActivity(detailContact);
                 }

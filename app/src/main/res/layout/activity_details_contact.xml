@@ -1,63 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.DetailsContactActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-
-    <TextView
-        android:id="@+id/detailName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:gravity="center"
-        android:textSize="24sp"
-        android:layout_margin="8dp"
-        android:text="NOME"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/detailEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:layout_margin="8dp"
-        android:text="EMAIL"/>
+        <TextView
+            android:id="@+id/detailName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/nome_completo"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/detailCity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:layout_margin="8dp"
-        android:text="CIDADE"/>
+        <TextView
+            android:id="@+id/detailPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/senha"
+            android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/detailPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:layout_margin="8dp"
-        android:text="TELEFONE"/>
+        <TextView
+            android:id="@+id/detailEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/email"
+            android:textSize="24sp" />
 
+
+        <TextView
+            android:id="@+id/detailPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/telefone"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/detailCellPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:layout_margin="8dp"
+            android:text="@string/celular"/>
+
+        <TextView
+            android:id="@+id/detailCpf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:layout_margin="8dp"
+            android:text="@string/cpf"/>
+
+        <TextView
+            android:id="@+id/detailCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/cidade"
+            android:textSize="24sp" />
 
     </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_baseline_add_24px"
-        tools:ignore="OnClick,VectorDrawableCompat"
-        android:onClick="registerNewContact"/>
 </FrameLayout>
