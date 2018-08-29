@@ -46,13 +46,11 @@ public class DetailsContactActivity extends AppCompatActivity {
         detailEmail.setText(Email);
 
         //TELEFONE
-        int TelefoneInt = extra.getInt("phone");
-        String Telefone = String.valueOf(TelefoneInt);
+        String Telefone = extra.getString("phone");
         detailPhone.setText(Telefone);
 
         //CELULAR
-        int CelularInt = extra.getInt("cellphone");
-        String Celular = String.valueOf(CelularInt);
+        String Celular = extra.getString("cellphone");
         detailCellPhone.setText(Celular);
 
         //CPF

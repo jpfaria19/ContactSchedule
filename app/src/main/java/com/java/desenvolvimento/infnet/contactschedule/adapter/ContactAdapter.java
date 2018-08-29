@@ -71,9 +71,9 @@ public class ContactAdapter extends RecyclerView.Adapter {
                     detailContact.putExtra("password", getPassword);
                     String getEmail = contact.getEmail();
                     detailContact.putExtra("email", getEmail);
-                    int getPhone = contact.getPhone();
+                    String getPhone = contact.getPhone();
                     detailContact.putExtra("phone", getPhone);
-                    int getCellPhone = contact.getCellPhone();
+                    String getCellPhone = contact.getCellPhone();
                     detailContact.putExtra("cellphone", getCellPhone);
                     String getCPF = contact.getCPF();
                     detailContact.putExtra("cpf", getCPF);

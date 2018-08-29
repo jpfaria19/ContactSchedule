@@ -142,8 +142,8 @@ public class RegisterActivity extends AppCompatActivity {
             contact.setName(edtName.getText().toString());
             contact.setPassword(edtPassword.getText().toString());
             contact.setEmail(edtEmail.getText().toString());
-            contact.setPhone(Integer.parseInt(edtPhone.getText().toString()));
-            contact.setCellPhone(Integer.parseInt(edtCellPhone.getText().toString()));
+            contact.setPhone(edtPhone.getText().toString());
+            contact.setCellPhone(edtCellPhone.getText().toString());
             contact.setCPF(edtCPF.getText().toString());
             contact.setCity(edtCity.getText().toString());
 
