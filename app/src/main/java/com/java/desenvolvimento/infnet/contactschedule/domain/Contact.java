@@ -12,8 +12,8 @@ public class Contact {
     private String Name;
     private String Password;
     private String Email;
-    private int Phone;
-    private int CellPhone;
+    private String Phone;
+    private String CellPhone;
     private String CPF;
     private String City;
     private long timestamp;
@@ -23,7 +23,7 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(String name, String password, String email, int phone, int cellPhone, String cpf, String city) {
+    public Contact(String name, String password, String email, String phone, String cellPhone, String cpf, String city) {
         Name = name;
         Password = password;
         Email = email;
@@ -73,19 +73,19 @@ public class Contact {
         this.Email = email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return Phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         Phone = phone;
     }
 
-    public int getCellPhone() {
+    public String getCellPhone() {
         return CellPhone;
     }
 
-    public void setCellPhone(int cellPhone) {
+    public void setCellPhone(String cellPhone) {
         CellPhone = cellPhone;
     }
 
