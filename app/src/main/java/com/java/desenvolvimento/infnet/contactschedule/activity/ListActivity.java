@@ -37,6 +37,8 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        getSupportActionBar().setTitle("Lista de contatos");
+
         database = FirebaseDatabase.getInstance();
 
         contactAdapter = new ContactAdapter(contacts);
