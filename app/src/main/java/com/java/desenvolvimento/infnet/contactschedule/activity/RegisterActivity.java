@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.java.desenvolvimento.infnet.contactschedule.DAO.ConfigureFirebase;
 import com.java.desenvolvimento.infnet.contactschedule.R;
 import com.java.desenvolvimento.infnet.contactschedule.domain.Contact;
+import com.java.desenvolvimento.infnet.contactschedule.util.MaskEditUtil;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -61,8 +62,11 @@ public class RegisterActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edtPassword);
         edtEmail = findViewById(R.id.edtEmail);
         edtPhone = findViewById(R.id.edtPhone);
+        edtPhone.addTextChangedListener(MaskEditUtil.mask(edtPhone, MaskEditUtil.FORMAT_PHONE));
         edtCellPhone = findViewById(R.id.edtCellPhone);
+        edtCellPhone.addTextChangedListener(MaskEditUtil.mask(edtCellPhone, MaskEditUtil.FORMAT_CELLPHONE));
         edtCPF = findViewById(R.id.edtCPF);
+        edtCPF.addTextChangedListener(MaskEditUtil.mask(edtCPF, MaskEditUtil.FORMAT_CPF));
         edtCity = findViewById(R.id.edtCity);
 
 
