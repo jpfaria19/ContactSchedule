@@ -3,9 +3,9 @@
     <string name="nome_completo">Nome completo</string>
     <string name="email">E-mail</string>
     <string name="senha">Senha</string>
-    <string name="cpf">CPF – Ex.: 12345678901</string>
-    <string name="telefone">Telefone – Ex.: 12345678</string>
-    <string name="celular">Celular – Ex.: 912345678</string>
+    <string name="cpf">CPF</string>
+    <string name="telefone">Telefone</string>
+    <string name="celular">Celular</string>
     <string name="cidade">Cidade</string>
     <string name="salvar">SALVAR</string>
     <string name="limpar">LIMPAR</string>
